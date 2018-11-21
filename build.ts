@@ -44,12 +44,17 @@ function extractAllObjects(program: ts.Program, file: ts.SourceFile): ObjectDict
         return result;
     }
     let foundVariables: ObjectDictionary = {};
+
+    function hasTrivia(n: ts.Node) {
+        let triviaWidth = n.getLeadingTriviaWidth()
+        let sourceText = n.getSourceFile().text;
+        let trivia = sourceText.substr(n.getFullStart(), triviaWidth);
+        return trivia.indexOf("Generate_Union") != -1
+    }
+
     function visit(node: ts.Node, context: ts.TransformationContext): ts.Node {
         if(ts.isVariableDeclarationList(node)) {
-            let triviaWidth = node.getLeadingTriviaWidth()
-            let sourceText = node.getSourceFile().text;
-            let trivia = sourceText.substr(node.getFullStart(), triviaWidth);
-            if(trivia.indexOf("Generate_Union") != -1) // Will generate fro variables with a comment Generate_Union above them
+            if(hasTrivia(node) || hasTrivia(node.parent)) // Will generate fro variables with a comment Generate_Union above them
             {
                 for(let declaration of node.declarations) {
                     if(declaration.initializer && ts.isObjectLiteralExpression(declaration.initializer)){
