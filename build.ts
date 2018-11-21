@@ -66,7 +66,7 @@ function extractAllObjects(program: ts.Program, file: ts.SourceFile): ObjectDict
 
 
 
-let result = extractAllObjects(program, program.getSourceFile("test.ts")!); // replace with file name 
+let result = extractAllObjects(program, program.getSourceFile("input.ts")!); // replace with file name 
 
 function generateUnions(dic: ObjectDictionary) {
     function toPaths(dic: ObjectDictionary) : string[] {
