@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "npx ts-node build.ts"
+  },
+  "dependencies": {
+    "@types/node": "^10.12.9",
+    "@types/typescript": "^2.0.0",
+    "ts-node": "^7.0.1"
+  }
+}
